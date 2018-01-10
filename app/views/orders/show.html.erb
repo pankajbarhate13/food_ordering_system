@@ -1,0 +1,29 @@
+<h1>Current Order</h1>
+<ul id="orders">
+  <div id="<%= dom_id(@order) %>">
+   <h2><p>order id: <%= @order.id %></p></h2>
+    <p><h3>order items:</h3> <% @order.order_items.each do |order_item| %></p>
+    <%= image_tag "items_#{order_item.item_id}.jpg", class: "item_img" %>
+      <p><b>name: </b><%= order_item.item.name %></p>
+      <p><b>description: </b><%= order_item.item.description %></p>
+      <p><b>price: </b><%= number_to_currency(order_item.item.price) %></p>
+      <p><b>quantity: </b><%= order_item.quantity %> </br>
+      <%= link_to "Remove From Cart", order_item_path(order_item), {class: "Remove From Cart", method: :delete} %>
+    <% end %>
+    <hr>
+      <p><b> Order Total: </b><%= number_to_currency(@order.total) %></p>
+      <% if current_order.items.any? %> 
+        <%= link_to "Submit Order", checkout_path, class: "submit_order" %>
+        <% else %>
+        <%= link_to "Submit Order", order_path(current_order), method: :get, data:{confirm: "You need to add items if you want to check out!"} %>
+       <% end %>
+
+
+    <p>order created at: <%= @order.created_at %></p>
+    <p>order updated at: <%= @order.updated_at %></p>
+  </div>
+  <hr>
+  <hr>
+</ul>
+<%= link_to "See Past Orders", orders_path, class: "orders" %> </br>
+<%= link_to "Back to the Menu", categories_path, class: "see_menu" %>

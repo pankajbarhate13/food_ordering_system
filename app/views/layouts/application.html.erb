@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Foog Ordering System</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <%= stylesheet_link_tag "application", media: "all", "data-turbolinks-track" => true %>
+    <%= javascript_include_tag "application", "data-turbolinks-track" => true %>
+    <%= csrf_meta_tags %>
+  </head>
+
+  <body>
+    <nav class="navbar navbar-default" role="navigation">
+  <div class="navbar-header">
+
+    <a class="navbar-brand" href="/categories"><h1 id="brand">FOOD ORDERING</h1></a>
+  </div>
+  <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+    <ul class="nav navbar-nav">
+      <li ><a href="/categories">Menu</a></li>
+      <li><a href="/about">About us</a></li>
+      <li >
+        <% if current_user %>
+          <%= link_to "Sign out", session_path, :method => :delete %>
+        <% else %>
+          <%= link_to "Sign in", new_session_path %>
+        <% end %>
+      </li>
+      <li>
+        <% if @order && @order.total > 0 %>
+          <%= link_to "Food basket: #{number_to_currency(@order.total)}", order_path(@order), class: "see_cart" %>
+        <% else %>
+          <%= link_to "Food basket: 0", order_path(current_order), class: "see_cart" %>
+        <% end %>
+      </li>
+      <li>
+        <% if current_user && current_user.admin? %>
+          <%= link_to "Dashboard", dashboard_path %>
+        <% end %>
+      </li>
+    </ul>
+  </div>
+</nav>
+    <div class="container">
+      <div class="centered">
+        <%- if flash.notice %>
+          <p><%= flash.notice %></p>
+        <% end %>
+        <%= yield %>
+      </div>
+    </div>
+  </body>
+</html>
+

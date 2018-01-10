@@ -1,0 +1,12 @@
+
+one:
+  name: MyString
+  user_name: MyString
+  email: MyString
+  password_digest: MyString
+
+two:
+  name: MyString
+  user_name: thanks
+  email: thankselaine
+  password_digest: MyString

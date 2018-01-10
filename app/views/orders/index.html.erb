@@ -1,0 +1,27 @@
+<% if current_user.admin? %>
+<h1>All orders</h1>
+<% else %>
+<h1>All orders for <%= current_user.email%></h1>
+<% end %>
+<ul id="orders">
+  <% @orders.each do |order| %>
+    <div id="<%= dom_id(order) %>">
+     <h2><p>order id: <%= order.id %></p></h2>
+      <p><h3>order items:</h3> 
+        <% order.order_items.each do |order_item| %></p>
+        <%= image_tag "items_#{order_item.item_id}.jpg", class: "item_img" %>
+        <p><b>name: </b><%= order_item.item.name %></p>
+        <p><b>description: </b><%= order_item.item.description %></p>
+        <p><b>price: </b><%= order_item.item.price %></p>
+        <p><b>quantity: </b><%= order_item.quantity %> </br>
+      <% end %>
+      <hr>
+        <p><b> Order Total: </b><%= number_to_currency(order.total) %>
+
+      <p>order completed at: <%= order.updated_at %></p>
+    </div>
+    <hr>
+    <hr>
+  <% end %>
+</ul>
+<%= link_to "See Menu", categories_path, class: "see_menu" %>
